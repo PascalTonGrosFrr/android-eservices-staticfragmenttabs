@@ -8,11 +8,12 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements FragmentOne.OnButtonClickListener{
 
     private ViewPager viewPager;
-    private int currentCounter;
+    private int currentCounter = 0;
     private TextView counterTextView;
+    private FragmentOne f1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         viewPager = findViewById(R.id.tab_viewpager);
 
         //TODO we want two fragments with layouts : fragment_one, fragment_two.
-        final FragmentOne f1 = FragmentOne.newInstance();
+        f1 = FragmentOne.newInstance();
         final FragmentTwo f2 = FragmentTwo.newInstance();
 
         //TODO set adapter to viewpager and handle fragment change inside
@@ -48,6 +49,19 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+
+    public void onButtonClicked(int increment) {
+        currentCounter += increment;
+    }
+
+
+    @Override
+    public void onAttachFragment(Fragment fragment) {
+        if (fragment instanceof FragmentOne) {
+            f1.setOnButtonClickListener(this);
+        }
     }
 
     //TODO : increment and decrement counter, use the already provided String ressource (see strings.xml)
