@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity implements FragmentOne.OnBut
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         counterTextView = findViewById(R.id.counter_textview);
-        counterTextView.setText(Integer.toString(currentCounter));
+        counterTextView.setText(String.format(getString(R.string.counter_text), currentCounter));
         setupViewPagerAndTabs();
     }
 
@@ -56,12 +56,12 @@ public class MainActivity extends AppCompatActivity implements FragmentOne.OnBut
 
     public void onButtonPlusClicked(int increment) {
         currentCounter += increment;
-        counterTextView.setText(Integer.toString(currentCounter));
+        counterTextView.setText(String.format(getString(R.string.counter_text), currentCounter));
     }
 
     public void onButtonLessClicked(int decrement) {
         currentCounter -= decrement;
-        counterTextView.setText(Integer.toString(currentCounter));
+        counterTextView.setText(String.format(getString(R.string.counter_text), currentCounter));
     }
 
 
