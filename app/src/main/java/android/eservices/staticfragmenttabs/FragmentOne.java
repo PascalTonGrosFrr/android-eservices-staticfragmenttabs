@@ -5,14 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ListView;
 
 import androidx.fragment.app.Fragment;
 
 //TODO : fix this fragment so it works :)
 //Once it's done, then create a second fragment with the other layout
 public class FragmentOne extends Fragment {
-    OnButtonClickListener callback;
+    OnButtonPlusClickListener callback;
     public static final String TAB_NAME = "ADD TO COUNTER";
 
     public FragmentOne() {
@@ -35,15 +34,14 @@ public class FragmentOne extends Fragment {
         return v;
     }
 
-    public void setOnButtonClickListener(OnButtonClickListener callback) {
+
+    public interface OnButtonPlusClickListener {
+        public void onButtonPlusClicked(int increment);
+    }
+
+    public void setOnButtonPlusClickListener(OnButtonPlusClickListener callback) {
         this.callback = callback;
     }
-
-    public interface OnButtonClickListener {
-        public void onButtonClicked(int increment);
-    }
-
-
 
     @Override
     public void onStart() {
@@ -51,7 +49,7 @@ public class FragmentOne extends Fragment {
         Button button = (Button) getView().findViewById(R.id.button_increment);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                callback.onButtonClicked(1);
+                callback.onButtonPlusClicked(1);
             }
         });
     }

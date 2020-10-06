@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment;
 //TODO : fix this fragment so it works :)
 //Once it's done, then create a second fragment with the other layout
 public class FragmentTwo extends Fragment {
-
+    FragmentTwo.OnButtonLessClickListener callback;
     public static final String TAB_NAME = "ADD TO COUNTER";
 
     public FragmentTwo() {
@@ -34,12 +34,25 @@ public class FragmentTwo extends Fragment {
         return v;
     }
 
+    public interface OnButtonLessClickListener {
+        public void onButtonLessClicked(int increment);
+    }
 
+    public void setOnButtonLessClickListener(FragmentTwo.OnButtonLessClickListener callback) {
+        this.callback = callback;
+    }
 
     @Override
     public void onStart() {
         super.onStart();
+        Button button = (Button) getView().findViewById(R.id.button_decrement);
+        button.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                callback.onButtonLessClicked(1);
+            }
+        });
     }
+
 
     //TODO add listener to button and transmit the information to parent Activity
     //TODO read the Android doc, as suggested, to do it the right way

@@ -8,12 +8,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentStatePagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
-public class MainActivity extends AppCompatActivity implements FragmentOne.OnButtonClickListener{
+public class MainActivity extends AppCompatActivity implements FragmentOne.OnButtonPlusClickListener, FragmentTwo.OnButtonLessClickListener {
 
     private ViewPager viewPager;
     private int currentCounter = 0;
     private TextView counterTextView;
     private FragmentOne f1;
+    private FragmentTwo f2;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements FragmentOne.OnBut
 
         //TODO we want two fragments with layouts : fragment_one, fragment_two.
         f1 = FragmentOne.newInstance();
-        final FragmentTwo f2 = FragmentTwo.newInstance();
+        f2 = FragmentTwo.newInstance();
 
         //TODO set adapter to viewpager and handle fragment change inside
         viewPager.setAdapter(new FragmentStatePagerAdapter(getSupportFragmentManager()) {
@@ -53,8 +54,13 @@ public class MainActivity extends AppCompatActivity implements FragmentOne.OnBut
     }
 
 
-    public void onButtonClicked(int increment) {
+    public void onButtonPlusClicked(int increment) {
         currentCounter += increment;
+        counterTextView.setText(Integer.toString(currentCounter));
+    }
+
+    public void onButtonLessClicked(int decrement) {
+        currentCounter -= decrement;
         counterTextView.setText(Integer.toString(currentCounter));
     }
 
@@ -62,7 +68,10 @@ public class MainActivity extends AppCompatActivity implements FragmentOne.OnBut
     @Override
     public void onAttachFragment(Fragment fragment) {
         if (fragment instanceof FragmentOne) {
-            f1.setOnButtonClickListener(this);
+            f1.setOnButtonPlusClickListener(this);
+        }
+        else {
+            f2.setOnButtonLessClickListener(this);
         }
     }
 
